@@ -7,6 +7,5 @@ export class LoginDto {
     @IsNotEmpty()
     senha: string
 
-    @IsBoolean()
     is_admin: boolean
 }

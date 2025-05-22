@@ -10,7 +10,7 @@ export class CreateCategoriasTable1747858488548 implements MigrationInterface {
                     descricao TEXT NOT NULL
                 );
 
-            insert into categoria_produtos(descricao) values ('INSUMO', 'CARDÁPIO', 'INSUMO/CARDÁPIO')
+            insert into categoria_produtos(descricao) values ('INSUMO'), ('CARDÁPIO'), ('INSUMO/CARDÁPIO')
 `);
     }
 

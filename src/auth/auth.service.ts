@@ -6,11 +6,14 @@ import { AuthReponseDto } from './dto/auth.dto';
 import { LoginDto } from './dto/user.dto.login';
 import { Admin } from 'src/database/entities/admin.entity';
 import { MessageEvent } from 'http';
+import { MerchantRepository } from 'src/merchants/merchantRepository';
+import { MerchantsService } from 'src/merchants/merchants.service';
+import { Merchant } from 'src/database/entities/merchant.entity';
 
 @Injectable()
 export class AuthService {
     private jwtExpiresInSeconds: number;
-    constructor(private readonly adminService: AdminsService, private readonly jwtService: JwtService, private readonly configService: ConfigService) {
+    constructor(private readonly adminService: AdminsService, private readonly jwtService: JwtService, private readonly configService: ConfigService, private readonly merchantRepository: MerchantRepository, private readonly merchantService: MerchantsService) {
         this.jwtExpiresInSeconds = parseInt(this.configService.get<string>("JWT_EXPIRATION")!, 10)
     }
 
@@ -42,7 +45,23 @@ export class AuthService {
             }
 
         } else {
-            throw new UnauthorizedException({}, "Email ou Senha incorreto")
+            const verificaSenha: boolean = await this.merchantService.verificaSenhaMerchant(loginDto)
+
+            if (!verificaSenha)
+                throw new UnauthorizedException({ status: false, message: "email ou senha incorreto" })
+
+            const { senha, ...Merchant }: Merchant = await this.merchantService.retornaMerchant(loginDto.email)
+            const payload = { Merchant, isAdmin: false }
+            const token = this.jwtService.sign(payload, {
+                secret: this.configService.get<string>('JWT_SECRET'),
+                expiresIn: this.jwtExpiresInSeconds
+            })
+
+            return {
+                sucess: true,
+                token: token,
+                expiresIn: this.jwtExpiresInSeconds
+            }
         }
     }
 }
