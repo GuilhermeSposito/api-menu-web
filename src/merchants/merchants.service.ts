@@ -14,7 +14,7 @@ export class MerchantsService {
         if (!admin.isAdmin)
             throw new UnauthorizedException({ success: false, message: "esse admin não esta autorizado a criar merchants" })
 
-        const merchantExiste = await this.merchantRepository.findOne({ where: { cnpj: merchantDto.cnpj } });
+        const merchantExiste = await this.merchantRepository.findOne({ where: { email: merchantDto.email } });
         if (merchantExiste)
             throw new HttpException("merchant já cadastrado com esse cnpj", HttpStatus.BAD_REQUEST);
 
@@ -31,10 +31,6 @@ export class MerchantsService {
             NomeFantasia: merchantDto.NomeFantasia,
             celular: merchantDto.celular,
             telefone: merchantDto.telefone,
-            cnpj: merchantDto.cnpj,
-            inscricaoEstadual: merchantDto.inscricaoEstadual,
-            cnae: merchantDto.cnae,
-            inscricaoMunicipal: merchantDto.inscricaoMunicipal,
             marcaDepartamento: merchantDto.marcaDepartamento,
             legendaDoVoluma: merchantDto.legendaDoVoluma
         })
@@ -60,8 +56,8 @@ export class MerchantsService {
         return await compare(emailEsenha.senha, merchantEncontrado.senha)
     }
 
-    async retornaMerchant(idMerchant: string): Promise<Merchant> {
-        const merchant: Merchant | null = await this.merchantRepository.findOne({ where: { id: idMerchant }, relations: ['enderecos_merchant', 'enderecos_merchant.cidade'] });
+    async retornaMerchant(emailMerchant: string): Promise<Merchant> {
+        const merchant: Merchant | null = await this.merchantRepository.findOne({ where: { email: emailMerchant }, relations: ['enderecos_merchant', 'enderecos_merchant.cidade'] });
 
         return merchant ?? new Merchant()
     }

@@ -5,6 +5,7 @@ import { Admin as AdminEntity } from "./entities/admin.entity";
 import { Cidades } from "./entities/cidade.entity";
 import { Merchant } from "./entities/merchant.entity";
 import { EnderecosMerchant } from "./entities/enderecos.merchant.entity";
+import { DocumentoMerchant } from "./entities/documento.merchant.entity";
 
 
 config();
@@ -18,7 +19,7 @@ const dataSourceOptions: DataSourceOptions = {
     username: configService.get<string>('DB_USERNAME'),
     password: configService.get<string>('DB_PASSWORD'),
     database: configService.get<string>('DB_DATABASE'),
-    entities: [AdminEntity, Cidades, Merchant, EnderecosMerchant],
+    entities: [AdminEntity, Cidades, Merchant, EnderecosMerchant, DocumentoMerchant],
     migrations: [__dirname + '/migrations/*.ts'],
     synchronize: false
 }

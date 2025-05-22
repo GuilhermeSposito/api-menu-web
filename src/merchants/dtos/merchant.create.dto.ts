@@ -26,18 +26,6 @@ export class MerchantDto {
     @MaxLength(20, { message: "deve ser enviado um campo com no maximo 20 caracteres" })
     telefone: string;
 
-    @IsNotEmpty()
-    @MaxLength(20, { message: "deve ser enviado um campo com no maximo 20 caracteres" })
-    cnpj: string;
-
-    @IsNotEmpty()
-    inscricaoEstadual: string;
-
-    @IsNotEmpty()
-    cnae: string;
-
-    @MaxLength(20, { message: "deve ser enviado um campo com no maximo 20 caracteres" })
-    inscricaoMunicipal: string;
 
     marcaDepartamento: string;
 

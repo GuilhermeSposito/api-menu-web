@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Cidades } from "./cidade.entity";
 import { EnderecosMerchant } from "./enderecos.merchant.entity";
+import { DocumentoMerchant } from "./documento.merchant.entity";
 
 @Entity({ name: 'merchants' })
 export class Merchant {
@@ -25,23 +26,14 @@ export class Merchant {
     @OneToMany(() => EnderecosMerchant, (enderecos) => enderecos.merchant)
     enderecos_merchant: EnderecosMerchant[]
 
+    @OneToMany(() => DocumentoMerchant, (documentos) => documentos.merchant)
+    documentos: []
+
     @Column({ name: "celular", nullable: false })
     celular: string;
 
     @Column({ name: "telefone", nullable: false })
     telefone: string;
-
-    @Column({ name: "cnpj", nullable: false })
-    cnpj: string;
-
-    @Column({ name: "inscricao_estadual", nullable: false })
-    inscricaoEstadual: string;
-
-    @Column({ name: "cnae", nullable: false })
-    cnae: string;
-
-    @Column({ name: "inscricao_municipal", nullable: false })
-    inscricaoMunicipal: string;
 
     @Column({ name: "marca_departamento", nullable: true })
     marcaDepartamento: string;
