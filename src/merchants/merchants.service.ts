@@ -60,9 +60,10 @@ export class MerchantsService {
         return await compare(emailEsenha.senha, merchantEncontrado.senha)
     }
 
-    async retornaMerchant(emailEnviado: string): Promise<Merchant> {
-        const merchant: Merchant | null = await this.merchantRepository.findOne({ where: { email: emailEnviado }, relations: ['enderecos_merchant', 'enderecos_merchant.cidade'] });
+    async retornaMerchant(idMerchant: string): Promise<Merchant> {
+        const merchant: Merchant | null = await this.merchantRepository.findOne({ where: { id: idMerchant }, relations: ['enderecos_merchant', 'enderecos_merchant.cidade'] });
 
         return merchant ?? new Merchant()
     }
+
 }

@@ -29,6 +29,7 @@ export class EnderecosMerchant {
 
     @Column({ name: "uf" })
     uf: string
+    newEndereco: { id: number; numCidade: number; descricao: string; };
 
 
 }

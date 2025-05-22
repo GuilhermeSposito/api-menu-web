@@ -18,7 +18,7 @@ export class MerchantsController {
 
   @Get("details")
   async detalhaMerchant(@User() merchant: MerchantPayLoad) {
-    return merchant;
+    return await this.merchantsService.retornaMerchant(merchant.id);
   }
 
 }
