@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { EnderecosMerchant } from 'src/database/entities/enderecos.merchant.entity';
 import { EnderecoMerchantRepository } from './enderecos.merchant.repository';
 import { Merchant } from 'src/database/entities/merchant.entity';
@@ -7,6 +7,7 @@ import { CreateEnderecosMerchantDto } from './dtos/endereco.create.dto';
 import { Cidades } from 'src/database/entities/cidade.entity';
 import { ReturnSuccess } from 'src/utils/return.sucess.api';
 import { UpdateEnderecosMerchantDto } from './dtos/enderecos.update.dto';
+import { v4 as uuid, validate as IsUUID } from 'uuid';
 
 @Injectable()
 export class EnderecosMerchantService {
@@ -49,6 +50,10 @@ export class EnderecosMerchantService {
     }
 
     async retornaEnderecoPorId(merchant: Merchant, idDoEndereco: string) {
+        if (!IsUUID(idDoEndereco)) {
+            throw new BadRequestException("uuid informado não é valido")
+        }
+
         const endereco: EnderecosMerchant | null = await this.enderecosMerchantRepository.findOne({ where: { id: idDoEndereco, merchant: { id: merchant.id } }, relations: ["cidade"] })
         if (!endereco) {
             return new ReturnSuccess(HttpStatus.NOT_FOUND, false, "endereco não encontrado")
@@ -57,6 +62,11 @@ export class EnderecosMerchantService {
     }
 
     async update(merchant: Merchant, idDoEndereco: string, enderecoDto: UpdateEnderecosMerchantDto) {
+
+        if (!IsUUID(idDoEndereco)) {
+            throw new BadRequestException("uuid informado não é valido")
+        }
+
         const endereco: EnderecosMerchant | null = await this.enderecosMerchantRepository.findOne({ where: { id: idDoEndereco, merchant: { id: merchant.id } } })
         if (!endereco) {
             return new ReturnSuccess(HttpStatus.NOT_FOUND, false, "endereco não encontrado")

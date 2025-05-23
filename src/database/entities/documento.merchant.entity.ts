@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Merchant } from "./merchant.entity";
 
 @Entity({ name: 'documentos_merchant' })
@@ -7,6 +7,7 @@ export class DocumentoMerchant {
     id: string;
 
     @ManyToOne(() => Merchant, (merchant) => merchant.documentos, { onDelete: "CASCADE" })
+    @JoinColumn({ name: "merchant_id" })
     merchant: Merchant;
 
     @Column({ name: "cnpj" })
