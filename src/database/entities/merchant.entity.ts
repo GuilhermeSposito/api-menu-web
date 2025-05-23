@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGe
 import { Cidades } from "./cidade.entity";
 import { EnderecosMerchant } from "./enderecos.merchant.entity";
 import { DocumentoMerchant } from "./documento.merchant.entity";
+import { TelefoneMerchant } from "./telefone.merchant.entity";
 
 @Entity({ name: 'merchants' })
 export class Merchant {
@@ -27,13 +28,10 @@ export class Merchant {
     enderecos_merchant: EnderecosMerchant[]
 
     @OneToMany(() => DocumentoMerchant, (documentos) => documentos.merchant)
-    documentos: []
+    documentos: DocumentoMerchant[]
 
-    @Column({ name: "celular", nullable: false })
-    celular: string;
-
-    @Column({ name: "telefone", nullable: false })
-    telefone: string;
+    @OneToMany(() => TelefoneMerchant, (telefones) => telefones.merchant)
+    telefones: TelefoneMerchant[]
 
     @Column({ name: "marca_departamento", nullable: true })
     marcaDepartamento: string;

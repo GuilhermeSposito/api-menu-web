@@ -20,7 +20,6 @@ export class MerchantsService {
 
         const hashSenha: string = await cryptPasswordAsync(merchantDto.senha, 10)
         merchantDto.senha = hashSenha;
-
         //criar cidades repository para poder inserir a cidade dinamicamente
 
         const newMerchant = await this.merchantRepository.create({
@@ -29,8 +28,6 @@ export class MerchantsService {
             razaoSocial: merchantDto.razaoSocial,
             ImagemLogo: merchantDto.ImagemLogo,
             NomeFantasia: merchantDto.NomeFantasia,
-            celular: merchantDto.celular,
-            telefone: merchantDto.telefone,
             marcaDepartamento: merchantDto.marcaDepartamento,
             legendaDoVoluma: merchantDto.legendaDoVoluma
         })
@@ -57,7 +54,7 @@ export class MerchantsService {
     }
 
     async retornaMerchant(emailMerchant: string): Promise<Merchant> {
-        const merchant: Merchant | null = await this.merchantRepository.findOne({ where: { email: emailMerchant }, relations: ['enderecos_merchant', 'enderecos_merchant.cidade', 'documentos'] });
+        const merchant: Merchant | null = await this.merchantRepository.findOne({ where: { email: emailMerchant }, relations: ['enderecos_merchant', 'enderecos_merchant.cidade', 'documentos', 'telefones'] });
 
         return merchant ?? new Merchant()
     }

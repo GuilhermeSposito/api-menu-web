@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { MerchantsModule } from './merchants/merchants.module';
 import { EnderecosMerchantModule } from './enderecos-merchant/enderecos-merchant.module';
 import { DocumentosMerchantModule } from './documentos-merchant/documentos-merchant.module';
+import { TelefonesMerchantModule } from './telefones-merchant/telefones-merchant.module';
 
 
 @Module({
@@ -16,7 +17,8 @@ import { DocumentosMerchantModule } from './documentos-merchant/documentos-merch
     AuthModule,
     MerchantsModule,
     EnderecosMerchantModule,
-    DocumentosMerchantModule
+    DocumentosMerchantModule,
+    TelefonesMerchantModule
   ]
 })
 export class AppModule { }
